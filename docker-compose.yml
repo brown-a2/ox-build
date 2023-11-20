@@ -17,18 +17,17 @@ services:
       - wordpress
       - mariadb
     environment:
-      VIRTUAL_HOST: hale.docker
+      VIRTUAL_HOST: ox.docker
       VIRTUAL_PORT: 443
 
   mariadb:
     container_name: mariadb
-#    image: mariadb:10.7.1-focal
     image: mariadb:11.1.2-jammy
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpress
+      MYSQL_DATABASE: oxbuild
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
       SERVICE_NAME: mariadb
@@ -63,9 +62,7 @@ services:
       S3_UPLOADS_USE_INSTANCE_PROFILE: "false"
       S3_UPLOADS_REGION: ""
       S3_UPLOADS_BUCKET: ""
-      SERVER_NAME: "hale.docker"
-      PHP_DSN: "" # Sentry constant (not used locally)
-      WP_SENTRY_ENV: ""
+      SERVER_NAME: "ox.docker"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

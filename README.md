@@ -8,6 +8,3 @@ This uses Helm charts to manage kubernetes manifest files. This repo is used to 
 
 To deploy to one of our environments, push a code change to one of the corresponding branches in this repo which will trigger GitActions that deploy the code into the kubernetes cluster.
 
-## Deploy locally on a Mac using Docker
-
-To run this WordPress instance locally, follow our guidance on [local development](https://github.com/ministryofjustice/hale-platform/wiki/Local-development).

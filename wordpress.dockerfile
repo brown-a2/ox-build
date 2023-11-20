@@ -25,8 +25,6 @@ RUN addgroup -g 1001 wp \
     && chown wp:wp /var/www/html
 
 # Add PHP multsite supporting files
-COPY opt/php/load.php /usr/src/wordpress/wp-content/mu-plugins/load.php
-COPY opt/php/application.php /usr/src/wordpress/wp-content/mu-plugins/application.php
 COPY opt/php/error-handling.php /usr/src/wordpress/error-handling.php
 COPY opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
@@ -39,9 +37,6 @@ COPY opt/scripts/config.sh /usr/local/bin/
 # The WP offical Docker image expects files to be in /usr/src/wordpress
 # but then will copy them over on launch of site to the /html directory.
 COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
-COPY /wordpress/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
-COPY /wordpress/wp-content/themes /usr/src/wordpress/wp-content/themes
-COPY /vendor /usr/src/wordpress/wp-content/vendor
 
 # Load default production php.ini file in
 # Custom php.ini additions for dev, staging & prod are done via k8s manifest
