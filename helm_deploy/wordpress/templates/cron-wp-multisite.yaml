@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: wp-cron
+  namespace: hale-platform-{{ .Values.configmap.envtype }}
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 100
+      template:
+        spec:
+          containers:
+          - name: nginx-cron-curl
+            image: {{ .Values.nginx.image.repository }}
+            imagePullPolicy: IfNotPresent
+            args:
+            - curl
+            - {{ .Values.domain }}/wp-cron-multisite.php
+          restartPolicy: OnFailure

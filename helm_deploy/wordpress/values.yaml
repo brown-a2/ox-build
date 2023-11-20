@@ -1,0 +1,68 @@
+# Default values for wordpress.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Empty strings mean value is overwritten and populated when run by GitAction
+# during deployment
+
+domain: ""
+
+nginx:
+  image:
+    repository: ""
+    imagePullPolicy: Always
+
+wp:
+  image:
+    repository: ""
+    imagePullPolicy: Always
+
+    # Default if HPA is not turned on
+    replicaCount:
+      prod: 3
+      staging: 2
+      dev: 1
+      demo: 2
+
+hpa:
+  enabled: true
+
+cron:
+  feedparser:
+    enabled: true
+
+ingress:
+  enabled: true
+  metadata:
+    annotations:
+      setidentifier: ""
+
+configmap:
+  servername: ""
+  envtype: ""
+  s3useprofile: "true"
+  sentrydns: ""
+
+secrets:
+  enabled: true
+  wpdbuser: ""
+  wpdbhost: ""
+  wpdbname: ""
+  wpdbpassword: ""
+  wpadminemail: ""
+  wpadminuser: ""
+  wpadminpassword: ""
+  wpauthkey: ""
+  wpauthsalt: ""
+  wploggedinkey: ""
+  wploggedinsalt: ""
+  wpnoncekey: ""
+  wpnoncesalt: ""
+  wpsecureauthkey: ""
+  wpsecureauthsalt: ""
+  s3uploadsbucket: ""
+  s3uploadsregion: ""
+
+alertSecrets:
+  enabled: true
+  slackWebhookUrl: ""

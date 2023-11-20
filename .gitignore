@@ -1,0 +1,13 @@
+mysql
+.env*
+.DS_Store
+.idea
+*.sql
+auth.json
+composer.lock
+vendor/
+wordpress/
+uploads/
+media/
+!helm_deploy/wordpress/
+bin/certs/
