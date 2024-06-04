@@ -22,4 +22,4 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           source: "/*"
-          target: "/"
+          target: "/usr/local/bin/oxbuild"
