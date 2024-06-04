@@ -22,4 +22,4 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           source: "."
-          target: "/usr/local/bin"
+          target: "/"
