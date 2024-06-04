@@ -21,5 +21,5 @@ jobs:
           key: ${{ secrets.KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
-          source: "."
+          source: "/*"
           target: "/"
