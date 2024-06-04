@@ -1,19 +1,25 @@
-name: remote ssh command
-on: [push]
-jobs:
+name: Deploy to PI
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
   build:
-    name: Deploy to PI
+    name: Copy Repository Files
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        passphrase: ${{ secrets.PASSPHRASE }}
-        script: |
-          mkdir -p /usr/local/bin/
-          scp -r $GITHUB_WORKSPACE/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/usr/local/bin/
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy files via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          port: ${{ secrets.PORT }}
+          source: "."
+          target: "/usr/local/bin"
