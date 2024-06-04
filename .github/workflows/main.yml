@@ -14,4 +14,6 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         passphrase: ${{ secrets.PASSPHRASE }}
-        script: whoami
+        script: |
+          mkdir -p /usr/local/bin/ox-build
+          scp -r $GITHUB_WORKSPACE/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/usr/local/bin/ox-build
