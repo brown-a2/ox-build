@@ -6,20 +6,19 @@ on:
       - main
 
 jobs:
-  build:
-    name: Copy Repository Files
+  deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: Copy files via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          port: ${{ secrets.PORT }}
-          source: "/*"
-          target: "/usr/local/bin/oxbuild"
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.KEY }}
+        ssh-passphrase: ${{ secrets.PASSPHRASE }}
+
+    - name: Copy repository to server
+      run: |
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/usr/local/bin
