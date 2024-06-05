@@ -1,7 +1,10 @@
 name: remote ssh command
-on: [push]
-jobs:
+on:
+  push:
+    branches:
+      - main
 
+jobs:
   build:
     name: Deploy to PI
     runs-on: ubuntu-latest
@@ -14,4 +17,5 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         passphrase: ${{ secrets.PASSPHRASE }}
-        script: whoami
+        script: |
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'bash -s' < /usr/local/bin/install_repo.sh
