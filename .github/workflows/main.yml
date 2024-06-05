@@ -1,24 +1,17 @@
-name: Deploy to PI
-
-on:
-  push:
-    branches:
-      - main
-
+name: remote ssh command
+on: [push]
 jobs:
-  deploy:
+
+  build:
+    name: Deploy to PI
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up SSH agent
-      uses: webfactory/ssh-agent@v0.9.0
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@v1.0.3
       with:
-        ssh-private-key: ${{ secrets.KEY }}
-        ssh-passphrase: ${{ secrets.PASSPHRASE }}
-
-    - name: Copy repository to server
-      run: |
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/usr/local/bin
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        script: whoami
