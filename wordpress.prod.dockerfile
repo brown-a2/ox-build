@@ -1,4 +1,3 @@
-####################################################
 # WordPress multisite image
 # Installs WordPress multisite, PHP and PHP-FPM to serve
 # files to NGINX
@@ -25,18 +24,18 @@ RUN addgroup -g 1001 wp \
     && chown wp:wp /var/www/html
 
 # Add PHP multsite supporting files
-COPY opt/php/error-handling.php /usr/src/wordpress/error-handling.php
-COPY opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
+COPY --chown=hale:hale opt/php/error-handling.php /usr/src/wordpress/error-handling.php
+COPY --chown=hale:hale opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY --chown=hale:hale opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
 
 # Setup WordPress multisite and network
-COPY opt/scripts/hale-entrypoint.sh /usr/local/bin/
-COPY opt/scripts/config.sh /usr/local/bin/
+COPY --chown=hale:hale opt/scripts/hale-entrypoint.sh /usr/local/bin/
+COPY --chown=hale:hale opt/scripts/config.sh /usr/local/bin/
 
 # Generated Composer and NPM compiled artifacts (plugins, themes, CSS, JS)
 # The WP offical Docker image expects files to be in /usr/src/wordpress
 # but then will copy them over on launch of site to the /html directory.
-COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
+COPY --chown=hale:hale /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
 
 # Load default production php.ini file in
 # Custom php.ini additions for dev, staging & prod are done via k8s manifest
