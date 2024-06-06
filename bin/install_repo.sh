@@ -15,9 +15,3 @@ git clone "$REPO_URL" "$TARGET_DIR"
 
 # Navigate to the target directory
 cd "$TARGET_DIR"
-
-echo "Building image"
-sudo make buildprod
-
-echo "Run containers"
-sudo runprod
