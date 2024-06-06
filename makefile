@@ -8,6 +8,9 @@ run:
 	chmod +x bin/upload.sh
 	./bin/upload.sh
 
+runprod:
+	docker-compose -f docker-compose-prod.yml up
+
 # Shutdown site using Docker
 down:
 	docker-compose down
@@ -18,8 +21,8 @@ down:
 # overwrite already exiting folder and therefore
 # doesn't update when bumping WP version for example.
 build:
-	chmod +x bin/build.sh && \
-	./bin/build.sh
+	chmod +x bin/build-prod.sh && \
+	./bin/build-prod.sh
 
 # Shell into the wordpress container
 shell:
@@ -28,3 +31,4 @@ shell:
 # Remove all dangling <none> images
 none:
 	docker rmi $(docker images -f "dangling=true" -q)
+
