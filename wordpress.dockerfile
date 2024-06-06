@@ -5,15 +5,15 @@
 # ##################################################
 
 # Build multisite
-FROM --platform=linux/amd64 wordpress:6.4.1-php8.2-fpm-alpine
+FROM --platform=linux/amd64 wordpress:6.5.3-php8.3-fpm-alpine
 
 # Install additional Alpine packages
 RUN apk update && \
     apk add less \
-            vim \
-            mysql \
-            mysql-client \
-            htop
+    vim \
+    mysql \
+    mysql-client \
+    htop
 
 # Install wp-cli
 RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
