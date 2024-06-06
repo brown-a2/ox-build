@@ -21,4 +21,5 @@ jobs:
           if [ -d "/usr/local/bin/ox-build" ]; then
             sudo rm -r /usr/local/bin/ox-build
           fi
-          sudo ./usr/local/bin/install_repo.sh
+          sudo /usr/local/bin/install_repo.sh
+
