@@ -21,6 +21,10 @@ down:
 # overwrite already exiting folder and therefore
 # doesn't update when bumping WP version for example.
 build:
+	chmod +x bin/build.sh && \
+	./bin/build.sh
+
+buildprod:
 	chmod +x bin/build-prod.sh && \
 	./bin/build-prod.sh
 
