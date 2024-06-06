@@ -69,7 +69,7 @@ while true; do
             echo -e '\n######################'
             echo -e '# Run Docker Build'
             echo -e '######################\n'
-            docker-compose build --no-cache --file wordpress.prod.dockerfile
+            docker-compose -f docker-compose-prod.yml build --no-cache
 
             break;;
         [Nn]* )
