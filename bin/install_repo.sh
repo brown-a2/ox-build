@@ -1,4 +1,5 @@
 #!/bin/bash
+# Install script. Copy into /usr/local/bin before setting up server.
 set -e
 
 # Debug output

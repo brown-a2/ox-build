@@ -1,9 +1,6 @@
 # WordPress multisite image
-# Installs WordPress multisite, PHP and PHP-FPM to serve
-# files to NGINX
+# Installs WordPress multisite, PHP and PHP-FPM
 # ##################################################
-
-# Build multisite
 FROM --platform=linux/arm/v7 wordpress:6.5.3-php8.3-fpm-alpine
 
 # Install additional Alpine packages

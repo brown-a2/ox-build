@@ -33,7 +33,6 @@ services:
   wordpress:
     container_name: wordpress
     platform: linux/arm/v7
-    user: $UID:$GID
     build:
       context: .
       dockerfile: wordpress.prod.dockerfile
