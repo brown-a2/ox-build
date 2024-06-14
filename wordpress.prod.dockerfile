@@ -1,7 +1,7 @@
 # WordPress multisite image
 # Installs WordPress multisite, PHP and PHP-FPM
 # ##################################################
-FROM --platform=linux/arm/v7 wordpress:6.5.3-php8.3-fpm-alpine
+FROM --platform=linux/arm/v7 wordpress:6.5.4-php8.3-fpm-alpine
 
 # Install additional Alpine packages
 RUN apk update && \
@@ -18,24 +18,23 @@ RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh
 # Set permissions for wp-cli
 RUN addgroup -g 1001 wp \
     && adduser -G wp -g wp -s /bin/sh -D wp \
-    && chown wp:wp /var/www/html
+    && chown -R wp:wp /var/www/html
 
-# Add PHP multsite supporting files
-COPY --chown=hale:hale opt/php/error-handling.php /usr/src/wordpress/error-handling.php
-COPY --chown=hale:hale opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY --chown=hale:hale opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
+# Add PHP multisite supporting files
+COPY --chown=wp:wp opt/php/error-handling.php /usr/src/wordpress/error-handling.php
+COPY --chown=wp:wp opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY --chown=wp:wp opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
 
 # Setup WordPress multisite and network
-COPY --chown=hale:hale opt/scripts/hale-entrypoint.sh /usr/local/bin/
-COPY --chown=hale:hale opt/scripts/config.sh /usr/local/bin/
+COPY --chown=wp:wp opt/scripts/hale-entrypoint.sh /usr/local/bin/
+COPY --chown=wp:wp opt/scripts/config.sh /usr/local/bin/
 
 # Generated Composer and NPM compiled artifacts (plugins, themes, CSS, JS)
-# The WP offical Docker image expects files to be in /usr/src/wordpress
-# but then will copy them over on launch of site to the /html directory.
-COPY --chown=hale:hale /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
+# The WP official Docker image expects files to be in /usr/src/wordpress
+# but then will copy them over on launch of the site to the /html directory.
+COPY --chown=wp:wp /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
 
-# Load default production php.ini file in
-# Custom php.ini additions for dev, staging & prod are done via k8s manifest
+# Load default production php.ini file
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Create new user to run the container as non-root
@@ -47,11 +46,12 @@ RUN adduser --disabled-password hale -u 1002 \
 RUN chmod +x /usr/local/bin/hale-entrypoint.sh \
     && chmod +x /usr/local/bin/config.sh
 
-# Create the uploads folder
-RUN mkdir -p /usr/src/wordpress/wp-content/uploads
+# Create the uploads folder with correct permissions
+RUN mkdir -p /usr/src/wordpress/wp-content/uploads \
+    && chown -R wp:wp /usr/src/wordpress/wp-content/uploads
 
-# Overwrite offical WP image ENTRYPOINT (docker-entrypoint.sh)
-# with custom entrypoint so we can launch WP multisite network
+# Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
+# with a custom entrypoint so we can launch WP multisite network
 ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]
 
 # Set container user 'root' to 'hale' that is set to 1002. Number is required

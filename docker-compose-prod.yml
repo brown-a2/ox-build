@@ -56,7 +56,7 @@ services:
       S3_UPLOADS_USE_INSTANCE_PROFILE: "false"
       S3_UPLOADS_REGION: ""
       S3_UPLOADS_BUCKET: ""
-      SERVER_NAME: "totoro.casa"
+      SERVER_NAME: "totoro-pi.ddns.net"
 
 volumes:
   database:
