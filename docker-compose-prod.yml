@@ -17,8 +17,6 @@ services:
     depends_on:
       - wordpress
       - mysqldb
-    networks:
-      - potato
 
   #Defining mysql service
   mysqldb:
@@ -33,7 +31,7 @@ services:
     volumes:
       - mysqldb_data:/var/lib/mysql #This will help persist mysqldb container data generated at '/var/lib/mysql' in named volume mysqldb_data
     networks:
-      - potato
+      - mysitenet
 
   #Defining wordpress service
   wordpress:
@@ -53,7 +51,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html #This will help persist wordpress container data generated at '/var/www/html' in named volume wordpress_data 
     networks:
-      - potato
+      - mysitenet
 
 #Define volumes
 volumes:
@@ -62,4 +60,4 @@ volumes:
 
     #Define networks
 networks:
-  potato:
+  mysitenet:
