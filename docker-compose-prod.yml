@@ -1,7 +1,6 @@
 services:
   nginx:
     container_name: nginx
-    platform: linux/arm/v7
     build:
       context: .
       dockerfile: nginx.prod.dockerfile
@@ -32,7 +31,6 @@ services:
 
   wordpress:
     container_name: wordpress
-    platform: linux/arm/v7
     build:
       context: .
       dockerfile: wordpress.prod.dockerfile
