@@ -18,29 +18,29 @@ RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh
 # Set permissions for wp-cli
 RUN addgroup -g 1001 wp \
     && adduser -G wp -g wp -s /bin/sh -D wp \
-    && chown -R wp:wp /var/www/html
+    && chown -R pi:pi /var/www/html
 
 # Add PHP multisite supporting files
-COPY --chown=wp:wp opt/php/error-handling.php /usr/src/wordpress/error-handling.php
-COPY --chown=wp:wp opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY --chown=wp:wp opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
+COPY --chown=pi:pi opt/php/error-handling.php /usr/src/wordpress/error-handling.php
+COPY --chown=pi:pi opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY --chown=pi:pi opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
 
 # Setup WordPress multisite and network
-COPY --chown=wp:wp opt/scripts/hale-entrypoint.sh /usr/local/bin/
-COPY --chown=wp:wp opt/scripts/config.sh /usr/local/bin/
+COPY --chown=pi:pi opt/scripts/hale-entrypoint.sh /usr/local/bin/
+COPY --chown=pi:pi opt/scripts/config.sh /usr/local/bin/
 
 # Generated Composer and NPM compiled artifacts (plugins, themes, CSS, JS)
 # The WP official Docker image expects files to be in /usr/src/wordpress
 # but then will copy them over on launch of the site to the /html directory.
-COPY --chown=wp:wp /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
+COPY --chown=pi:pi /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
 
 # Load default production php.ini file
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Create new user to run the container as non-root
 RUN adduser --disabled-password hale -u 1002 \
-    && chown -R hale:hale /var/www/html \
-    && chown hale:hale /usr/local/bin/docker-entrypoint.sh
+    && chown -R pi:pi /var/www/html \
+    && chown pi:pi /usr/local/bin/docker-entrypoint.sh
 
 # Make multisite scripts executable
 RUN chmod +x /usr/local/bin/hale-entrypoint.sh \
@@ -48,7 +48,7 @@ RUN chmod +x /usr/local/bin/hale-entrypoint.sh \
 
 # Create the uploads folder with correct permissions
 RUN mkdir -p /usr/src/wordpress/wp-content/uploads \
-    && chown -R wp:wp /usr/src/wordpress/wp-content/uploads
+    && chown -R pi:pi /usr/src/wordpress/wp-content/uploads
 
 # Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
 # with a custom entrypoint so we can launch WP multisite network
