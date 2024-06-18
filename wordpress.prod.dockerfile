@@ -1,7 +1,7 @@
 # WordPress multisite image
 # Installs WordPress multisite, PHP and PHP-FPM
 # ##################################################
-FROM --platform=linux/arm/v7 wordpress:6.5.4-php8.3-fpm-alpine
+FROM wordpress:6.5.4-php8.3-fpm-alpine
 
 # Install additional Alpine packages
 RUN apk update && \
@@ -12,19 +12,19 @@ RUN apk update && \
     htop
 
 # Install wp-cli
-RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
-    chmod +x /usr/local/bin/wp
+# RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+#     chmod +x /usr/local/bin/wp
 
 # Set permissions for wp-cli
-RUN addgroup -g 1001 wp \
-    && adduser -G wp -g wp -s /bin/sh -D wp \
-    && chown -R wp:wp /var/www/html
+# RUN addgroup -g 1001 wp \
+#     && adduser -G wp -g wp -s /bin/sh -D wp \
+#     && chown -R wp:wp /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 
 # Add PHP multisite supporting files
 #COPY opt/php/error-handling.php /usr/src/wordpress/error-handling.php
-COPY opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+#COPY opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 #COPY opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
 
 # Setup WordPress multisite and network
