@@ -37,7 +37,7 @@ services:
   wordpress:
     build:
       context: .
-      dockerfile: wordpress.dockerfile
+      dockerfile: wordpress.prod.dockerfile
     restart: always #this ensures when server reboots container restarts
     depends_on:
       - mysqldb
