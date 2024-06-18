@@ -1,4 +1,4 @@
-version: '3.9' #using docker compose version 3.9
+version: '3.9'
 
 services:
   nginx:
@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: nginx.prod.dockerfile
     ports:
-      - 80:80
+      - "80:80"
     volumes:
       - wordpress_data:/var/www/html
       - ./opt/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -17,47 +17,45 @@ services:
     depends_on:
       - wordpress
       - mysqldb
-
-  #Defining mysql service
-  mysqldb:
-    image: jsurf/rpi-mariadb
-    environment:
-      #feel free to change these variables as needed
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpressdb #name of database to be created on start of image startup
-      MYSQL_USER: wordpressuser #this user will be created/granted superuser permissions for the database(wordpressdb)specified above 
-      MYSQL_PASSWORD: wordpresspass
-    restart: always #this ensures when server reboots container resttarts
-    volumes:
-      - mysqldb_data:/var/lib/mysql #This will help persist mysqldb container data generated at '/var/lib/mysql' in named volume mysqldb_data
     networks:
       - mysitenet
 
-  #Defining wordpress service
+  mysqldb:
+    image: jsurf/rpi-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpressdb
+      MYSQL_USER: wordpressuser
+      MYSQL_PASSWORD: wordpresspass
+    restart: always
+    volumes:
+      - mysqldb_data:/var/lib/mysql
+    networks:
+      - mysitenet
+
   wordpress:
     build:
       context: .
       dockerfile: wordpress.prod.dockerfile
-    restart: always #this ensures when server reboots container restarts
+    restart: always
     depends_on:
       - mysqldb
     environment:
-      WORDPRESS_DB_HOST: mysqldb #mysql db hostname
-      WORDPRESS_DB_NAME: wordpressdb #mysql database to be used for wordpress database
-      WORDPRESS_DB_USER: wordpressuser #should be same as MYSQL_USER
-      WORDPRESS_DB_PASSWORD: wordpresspass #should be same as MYSQL_PASSWORD    
+      WORDPRESS_DB_HOST: mysqldb
+      WORDPRESS_DB_NAME: wordpressdb
+      WORDPRESS_DB_USER: wordpressuser
+      WORDPRESS_DB_PASSWORD: wordpresspass
     ports:
       - "9000:80"
     volumes:
-      - wordpress_data:/var/www/html #This will help persist wordpress container data generated at '/var/www/html' in named volume wordpress_data 
+      - wordpress_data:/var/www/html
     networks:
       - mysitenet
 
-#Define volumes
 volumes:
   mysqldb_data:
   wordpress_data:
 
-    #Define networks
+
 networks:
   mysitenet:
