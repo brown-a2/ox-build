@@ -20,6 +20,8 @@ RUN addgroup -g 1001 wp \
     && adduser -G wp -g wp -s /bin/sh -D wp \
     && chown -R wp:wp /var/www/html
 
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
 # Add PHP multisite supporting files
 #COPY opt/php/error-handling.php /usr/src/wordpress/error-handling.php
 COPY opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
