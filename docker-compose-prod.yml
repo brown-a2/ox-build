@@ -17,6 +17,8 @@ services:
     depends_on:
       - wordpress
       - mysqldb
+    networks:
+      - potato
 
   #Defining mysql service
   mysqldb:
@@ -31,7 +33,7 @@ services:
     volumes:
       - mysqldb_data:/var/lib/mysql #This will help persist mysqldb container data generated at '/var/lib/mysql' in named volume mysqldb_data
     networks:
-      - mysitenet
+      - potato
 
   #Defining wordpress service
   wordpress:
@@ -45,11 +47,13 @@ services:
       WORDPRESS_DB_HOST: mysqldb #mysql db hostname
       WORDPRESS_DB_NAME: wordpressdb #mysql database to be used for wordpress database
       WORDPRESS_DB_USER: wordpressuser #should be same as MYSQL_USER
-      WORDPRESS_DB_PASSWORD: wordpresspass #should be same as MYSQL_PASSWORD
+      WORDPRESS_DB_PASSWORD: wordpresspass #should be same as MYSQL_PASSWORD    
+    ports:
+      - "9000:80"
     volumes:
       - wordpress_data:/var/www/html #This will help persist wordpress container data generated at '/var/www/html' in named volume wordpress_data 
     networks:
-      - mysitenet
+      - potato
 
 #Define volumes
 volumes:
@@ -58,4 +62,4 @@ volumes:
 
     #Define networks
 networks:
-  mysitenet:
+  potato:
