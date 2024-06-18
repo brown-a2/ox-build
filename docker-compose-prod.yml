@@ -3,7 +3,7 @@ version: '3.9' #using docker compose version 3.9
 services:
   #Defining mysql service
   mysqldb:
-    image: mysql
+    image: jsurf/rpi-mariadb
     environment:
       #feel free to change these variables as needed
       MYSQL_ROOT_PASSWORD: root
