@@ -6,7 +6,7 @@ services:
     platform: linux/arm64v8
     build:
       context: .
-      dockerfile: nginx.local.dockerfile
+      dockerfile: nginx.prod.dockerfile
     ports:
       - 8080:80
     volumes:
