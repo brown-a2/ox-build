@@ -21,13 +21,13 @@ RUN addgroup -g 1001 wp \
     && chown -R wp:wp /var/www/html
 
 # Add PHP multisite supporting files
-COPY opt/php/error-handling.php /usr/src/wordpress/error-handling.php
+#COPY opt/php/error-handling.php /usr/src/wordpress/error-handling.php
 COPY opt/php/www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
+#COPY opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
 
 # Setup WordPress multisite and network
-COPY opt/scripts/hale-entrypoint.sh /usr/local/bin/
-COPY opt/scripts/config.sh /usr/local/bin/
+#COPY opt/scripts/hale-entrypoint.sh /usr/local/bin/
+#COPY opt/scripts/config.sh /usr/local/bin/
 
 # Generated Composer and NPM compiled artifacts (plugins, themes, CSS, JS)
 # The WP official Docker image expects files to be in /usr/src/wordpress
@@ -35,25 +35,25 @@ COPY opt/scripts/config.sh /usr/local/bin/
 #COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
 
 # Load default production php.ini file
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+#RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Create new user to run the container as non-root
-RUN adduser --disabled-password hale -u 1002 \
-    && chown -R hale:hale /var/www/html \
-    && chown hale:hale /usr/local/bin/docker-entrypoint.sh
+#RUN adduser --disabled-password hale -u 1002 \
+#&& chown -R hale:hale /var/www/html \
+#&& chown hale:hale /usr/local/bin/docker-entrypoint.sh
 
 # Make multisite scripts executable
-RUN chmod +x /usr/local/bin/hale-entrypoint.sh \
-    && chmod +x /usr/local/bin/config.sh
+#RUN chmod +x /usr/local/bin/hale-entrypoint.sh \
+#&& chmod +x /usr/local/bin/config.sh
 
 # Create the uploads folder with correct permissions
-RUN mkdir -p /usr/src/wordpress/wp-content/uploads \
-    && chown -R hale:hale /usr/src/wordpress/wp-content/uploads
+#RUN mkdir -p /usr/src/wordpress/wp-content/uploads \
+#&& chown -R hale:hale /usr/src/wordpress/wp-content/uploads
 
 # Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
 # with a custom entrypoint so we can launch WP multisite network
-ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]
+#ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]
 
 # Set container user 'root' to 'hale' that is set to 1002. Number is required
 # instead of using user name.
-USER 1002
+#USER 1002
