@@ -24,7 +24,7 @@ services:
     image: jsurf/rpi-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpressdb
+      MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpressuser
       MYSQL_PASSWORD: wordpresspass
     restart: always
@@ -42,9 +42,15 @@ services:
       - mysqldb
     environment:
       WORDPRESS_DB_HOST: mysqldb
-      WORDPRESS_DB_NAME: wordpressdb
+      WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpressuser
       WORDPRESS_DB_PASSWORD: wordpresspass
+      WP_ENVIRONMENT_TYPE: local
+      S3_UPLOADS_USE_LOCAL: "true"
+      S3_UPLOADS_USE_INSTANCE_PROFILE: "false"
+      S3_UPLOADS_REGION: ""
+      S3_UPLOADS_BUCKET: ""
+      SERVER_NAME: "raspberrypi.local"
     volumes:
       - wordpress_data:/var/www/html
     networks:

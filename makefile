@@ -13,7 +13,7 @@ runprod:
 
 # Shutdown site using Docker
 down:
-	docker-compose down
+	docker-compose down --remove-orphans
 
 # Build all images on local machine
 # and remove any previous WP installations.
