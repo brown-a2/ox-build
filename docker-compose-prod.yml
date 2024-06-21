@@ -16,11 +16,11 @@ services:
       - ./bin/certs:/etc/nginx/certs/self-signed/
     depends_on:
       - wordpress
-      - mysqldb
+      - mariadb
     networks:
       - mysitenet
 
-  mysqldb:
+  mariadb:
     image: jsurf/rpi-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -29,7 +29,7 @@ services:
       MYSQL_PASSWORD: wordpresspass
     restart: always
     volumes:
-      - mysqldb_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     networks:
       - mysitenet
 
@@ -39,12 +39,15 @@ services:
       dockerfile: wordpress.prod.dockerfile
     restart: always
     depends_on:
-      - mysqldb
+      - mariadb
     environment:
-      WORDPRESS_DB_HOST: mysqldb
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: wordpressuser
-      WORDPRESS_DB_PASSWORD: wordpresspass
+      WORDPRESS_ADMIN_USER: admin
+      WORDPRESS_ADMIN_PASSWORD: wordpress
+      WORDPRESS_ADMIN_EMAIL: "wordpress@hale.docker"
       WP_ENVIRONMENT_TYPE: local
       S3_UPLOADS_USE_LOCAL: "true"
       S3_UPLOADS_USE_INSTANCE_PROFILE: "false"
@@ -57,7 +60,7 @@ services:
       - mysitenet
 
 volumes:
-  mysqldb_data:
+  mariadb_data:
   wordpress_data:
 
 
