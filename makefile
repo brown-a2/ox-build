@@ -9,7 +9,7 @@ run:
 	./bin/upload.sh
 
 runprod:
-	docker-compose -f docker-compose-prod.yml up
+	docker-compose -f docker-compose-prod.yml up -d
 
 # Shutdown site using Docker
 down:
