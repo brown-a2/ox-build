@@ -26,12 +26,6 @@ COPY opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
 COPY opt/scripts/hale-entrypoint.sh /usr/local/bin/
 COPY opt/scripts/config.sh /usr/local/bin/
 
-# Copy SSL certificates
-COPY ./etc/nginx/ssl /etc/nginx/ssl
-
-# Set permissions for SSL certificates
-RUN chmod 644 /etc/nginx/ssl/nginx.crt && chmod 644 /etc/nginx/ssl/nginx.key
-
 # Generated Composer and NPM compiled artifacts (plugins, themes, CSS, JS)
 # The WP official Docker image expects files to be in /usr/src/wordpress
 # but then will copy them over on launch of the site to the /html directory.
