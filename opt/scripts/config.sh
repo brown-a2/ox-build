@@ -13,7 +13,7 @@ wp config set COOKIEPATH "/"
 wp config set SITECOOKIEPATH "/"
 wp config set WP_ENVIRONMENT_TYPE "\$_SERVER['WP_ENVIRONMENT_TYPE']" --raw
 wp config set AUTOMATIC_UPDATER_DISABLED true --raw
-wp config set FORCE_SSL_ADMIN true --raw
+wp config set FORCE_SSL_ADMIN false --raw
 wp config set S3_UPLOADS_BUCKET "\$_SERVER['S3_UPLOADS_BUCKET']" --raw
 wp config set S3_UPLOADS_REGION "\$_SERVER['S3_UPLOADS_REGION']" --raw
 wp config set S3_UPLOADS_USE_INSTANCE_PROFILE "\$_SERVER['S3_UPLOADS_USE_INSTANCE_PROFILE']" --raw
@@ -34,7 +34,7 @@ wp core multisite-install --title="Ox-Build Multisite Platform" \
 wp core update-db --network --url="${SERVER_NAME}"
 
 # Activate greater capabilities for Query Monitor plugin
-wp qm enable
+#wp qm enable
 
 # Delete default installed core themes and plugins
 wp theme delete twentytwentyone twentytwentytwo
