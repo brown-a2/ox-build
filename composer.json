@@ -22,6 +22,14 @@
         {
             "type": "composer",
             "url": "https://packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ministryofjustice/wp-gov-uk-notify"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ministryofjustice/wp-s3-uploads"
         }
     ],
     "require": {
