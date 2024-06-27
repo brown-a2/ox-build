@@ -5,7 +5,7 @@
 # ##################################################
 
 # Build multisite
-FROM --platform=linux/amd64 wordpress:6.5.3-php8.3-fpm-alpine
+FROM --platform=linux/amd64 wordpress:6.5.5-php8.3-fpm-alpine
 
 # Install additional Alpine packages
 RUN apk update && \
@@ -37,6 +37,7 @@ COPY opt/scripts/config.sh /usr/local/bin/
 # The WP offical Docker image expects files to be in /usr/src/wordpress
 # but then will copy them over on launch of site to the /html directory.
 COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
+COPY /wordpress/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
 
 # Load default production php.ini file in
 # Custom php.ini additions for dev, staging & prod are done via k8s manifest

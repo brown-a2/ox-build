@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64v8 arm64v8/nginx
+FROM nginx
 
 RUN apt-get -y update
 RUN apt-get -y install vim
