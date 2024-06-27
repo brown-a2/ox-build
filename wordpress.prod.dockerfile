@@ -1,4 +1,4 @@
-FROM --platform=linux/arm/v7 wordpress:6.5.4-php8.3-fpm-alpine
+FROM --platform=linux/arm/v7 wordpress:6.5.5-php8.3-fpm-alpine
 
 # Install additional Alpine packages
 RUN apk update && \

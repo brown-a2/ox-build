@@ -4,7 +4,12 @@
     "license": "MIT",
     "description": "Ox-build multisite required packages",
     "authors": [],
-    "keywords": ["wordpress", "stack", "composer", "wp, multisite, php"],
+    "keywords": [
+        "wordpress",
+        "stack",
+        "composer",
+        "wp, multisite, php"
+    ],
     "support": {},
     "config": {
         "allow-plugins": true
@@ -34,14 +39,20 @@
     "extra": {
         "installer-paths": {
             "wordpress/wp-content/mu-plugins/{$name}/": [
-                "type:wordpress-muplugin"
+                "type:wordpress-muplugin",
+                "ministryofjustice/wp-gov-uk-notify",
+                "ministryofjustice/wp-s3-uploads"
             ],
-            "wordpress/wp-content/plugins/{$name}/": ["type:wordpress-plugin"]
+            "wordpress/wp-content/plugins/{$name}/": [
+                "type:wordpress-plugin"
+            ]
         },
         "wordpress-install-dir": "/var/www/html"
     },
     "scripts": {
         "post-root-package-install": [],
-        "test": ["phpcs"]
+        "test": [
+            "phpcs"
+        ]
     }
 }
