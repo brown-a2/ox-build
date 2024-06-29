@@ -9,7 +9,7 @@ run:
 	./bin/upload.sh
 
 runprod:
-	docker-compose -f docker-compose-prod.yml --env-file ../.env up -d
+	docker-compose -f docker-compose-prod.yml --env-file /usr/local/bin/.env up -d
 
 # Shutdown site using Docker
 down:
