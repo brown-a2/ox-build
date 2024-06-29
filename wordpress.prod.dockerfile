@@ -32,7 +32,7 @@ COPY opt/scripts/config.sh /usr/local/bin/
 # The WP official Docker image expects files to be in /usr/src/wordpress
 # but then will copy them over on launch of the site to the /html directory.
 COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
-COPY /wordpress/wp-content/mu-plugins /var/www/html/wp-content/mu-plugins
+COPY /wordpress/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
 
 # Load default production php.ini file
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -45,12 +45,12 @@ RUN chmod +x /usr/local/bin/hale-entrypoint.sh \
 RUN mkdir -p /usr/src/wordpress/wp-content/uploads \
     && chown -R www-data:www-data /usr/src/wordpress/wp-content/uploads
 
-# Change ownership of wp-content and its subfolders to www-data
-RUN chown -R www-data:www-data /usr/src/wordpress/wp-content    
-
 # Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
 # with a custom entrypoint so we can launch WP multisite network
 ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]
+
+# Change ownership of wp-content and its subfolders to www-data
+RUN chown -R www-data:www-data /usr/src/wordpress/wp-content    
 
 #Set container user to 'www-data'
 USER www-data
