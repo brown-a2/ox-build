@@ -15,7 +15,7 @@ RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh
 # Set permissions for wp-cli
 RUN addgroup -g 1001 wp \
     && adduser -G wp -g wp -s /bin/sh -D wp \
-    && chown -R wp:wp /var/www/html
+    && adduser wp www-data
 
 # Add PHP multisite supporting files
 COPY opt/php/load.php /usr/src/wordpress/wp-content/mu-plugins/load.php
@@ -44,6 +44,9 @@ RUN chmod +x /usr/local/bin/hale-entrypoint.sh \
 # Create the uploads folder with correct permissions
 RUN mkdir -p /usr/src/wordpress/wp-content/uploads \
     && chown -R www-data:www-data /usr/src/wordpress/wp-content/uploads
+
+# Change ownership of wp-content and its subfolders to www-data
+RUN chown -R www-data:www-data /usr/src/wordpress/wp-content
 
 # Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
 # with a custom entrypoint so we can launch WP multisite network
