@@ -17,6 +17,9 @@ RUN addgroup -g 1001 wp \
     && adduser -G wp -g wp -s /bin/sh -D wp \
     && adduser wp www-data
 
+# Change ownership of wp-content and its subfolders to www-data
+RUN chown -R www-data:www-data /usr/src/wordpress/wp-content
+
 # Add PHP multisite supporting files
 COPY opt/php/load.php /usr/src/wordpress/wp-content/mu-plugins/load.php
 COPY opt/php/application.php /usr/src/wordpress/wp-content/mu-plugins/application.php
@@ -47,10 +50,7 @@ RUN mkdir -p /usr/src/wordpress/wp-content/uploads \
 
 # Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
 # with a custom entrypoint so we can launch WP multisite network
-ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]
-
-# Change ownership of wp-content and its subfolders to www-data
-RUN chown -R www-data:www-data /usr/src/wordpress/wp-content    
+ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]   
 
 #Set container user to 'www-data'
 USER www-data
