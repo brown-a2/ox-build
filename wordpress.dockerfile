@@ -38,6 +38,8 @@ COPY opt/scripts/config.sh /usr/local/bin/
 # but then will copy them over on launch of site to the /html directory.
 COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
 COPY /wordpress/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
+COPY /wordpress/wp-content/themes /usr/src/wordpress/wp-content/themes
+COPY /vendor /usr/src/wordpress/wp-content/vendor
 
 # Load default production php.ini file in
 # Custom php.ini additions for dev, staging & prod are done via k8s manifest

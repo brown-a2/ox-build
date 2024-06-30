@@ -29,14 +29,19 @@ while true; do
             # Determine the path for the .env file and create file. Do not overwrite if .env exists.
             ENV_FILE_PATH="$(pwd)/.env"
 
-            # Check if .env file already exists
-            if [ ! -f "$ENV_FILE_PATH" ]; then
-                # Create .env only if it doesn't exist
-                echo "# Add in custom variables you want to run in the Docker container locally" > "$ENV_FILE_PATH"
-                echo "Generated .env file at $ENV_FILE_PATH"
+            # Check if environment is set to prod
+            if [ "$ENVIRONMENT" = "prod" ]; then
+                echo "Environment is set to 'prod'. Skipping creation of .env file."
             else
-                # .env file already exists
-                echo ".env file already exists at $ENV_FILE_PATH. Skipping creation."
+                # Check if .env file already exists
+                if [ ! -f "$ENV_FILE_PATH" ]; then
+                    # Create .env only if it doesn't exist
+                    echo "# Add in custom variables you want to run in the Docker container locally" > "$ENV_FILE_PATH"
+                    echo "Generated .env file at $ENV_FILE_PATH"
+                else
+                    # .env file already exists
+                    echo ".env file already exists at $ENV_FILE_PATH. Skipping creation."
+                fi
             fi
 
             # Install build dependancies
