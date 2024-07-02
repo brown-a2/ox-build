@@ -36,3 +36,7 @@ shell:
 none:
 	docker rmi $(docker images -f "dangling=true" -q)
 
+backup:
+	chmod +x bin/backup_script.sh
+	./bin/backup_script.sh
+	aws s3 cp *.sql s3://totoro-db-backup/ --profile totoros3backup
