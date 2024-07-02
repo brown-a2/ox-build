@@ -40,3 +40,7 @@ backup:
 	chmod +x bin/backup_script.sh
 	./bin/backup_script.sh
 	aws s3 cp *.sql s3://totoro-db-backup/ --profile totoros3backup
+
+import:
+	chmod +x bin/import_script.sh
+	./bin/import_script.sh
