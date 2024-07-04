@@ -35,7 +35,7 @@ COPY opt/scripts/config.sh /usr/local/bin/
 COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
 COPY /wordpress/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
 COPY /vendor /usr/src/wordpress/wp-content/vendor
-#COPY /wordpress/wp-content/themes /usr/src/wordpress/wp-content/themes
+COPY /wordpress/wp-content/themes /usr/src/wordpress/wp-content/themes
 
 # Load default production php.ini file
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
