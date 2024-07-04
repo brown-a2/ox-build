@@ -61,9 +61,11 @@
             "wordpress/wp-content/plugins/{$name}/": [
                 "type:wordpress-plugin"
             ],
-            "wordpress/wp-content/themes/{$name}/": [
-                "type:wordpress-theme",
+            "wordpress/wp-content/themes/herrnaset/": [
                 "brown-a2/herrnaset"
+            ],
+            "wordpress/wp-content/themes/{$name}/": [
+                "type:wordpress-theme"
             ]
         },
         "wordpress-install-dir": "/var/www/html"
