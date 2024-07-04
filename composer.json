@@ -30,6 +30,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/ministryofjustice/wp-s3-uploads"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/brown-a2/herrnaset"
         }
     ],
     "require": {
@@ -41,6 +45,7 @@
         "wpackagist-plugin/wp-force-login": "*",
         "wpackagist-plugin/wps-hide-login": "*",
         "ministryofjustice/wp-gov-uk-notify": "*",
+        "brown-a2/herrnaset": "dev-main",
         "ministryofjustice/wp-s3-uploads": "dev-main"
     },
     "require-dev": {
@@ -55,6 +60,10 @@
             ],
             "wordpress/wp-content/plugins/{$name}/": [
                 "type:wordpress-plugin"
+            ],
+            "wordpress/wp-content/themes/{$name}/": [
+                "type:wordpress-theme",
+                "brown-a2/herrnaset"
             ]
         },
         "wordpress-install-dir": "/var/www/html"
