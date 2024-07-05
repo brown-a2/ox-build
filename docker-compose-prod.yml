@@ -11,7 +11,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - /var/www/html
+      - wordpress_data:/var/www/html
       - ./opt/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./opt/nginx/wordpress-prod.conf:/etc/nginx/conf.d/wordpress-prod.conf
     depends_on:
@@ -61,12 +61,13 @@ services:
       S3_UPLOADS_SECRET: ${S3_UPLOADS_SECRET}
       SERVER_NAME: ${SERVER_NAME}
     volumes:
-      - /var/www/html
+      - wordpress_data:/var/www/html
     networks:
       - mysitenet
 
 volumes:
   mariadb_data:
+  wordpress_data:
 
 
 networks:
