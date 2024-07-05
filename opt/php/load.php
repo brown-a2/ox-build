@@ -1,8 +1,6 @@
 <?php
 
-// Autoloads mu-plugins
-
-
+# Autoloads mu-plugins
 # Turn off s3 upload plugin in the local environment
 # so it doesn't rewrite media urls to an s3 address
 
