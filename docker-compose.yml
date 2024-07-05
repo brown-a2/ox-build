@@ -61,6 +61,8 @@ services:
       S3_UPLOADS_USE_INSTANCE_PROFILE: "false"
       S3_UPLOADS_REGION: ""
       S3_UPLOADS_BUCKET: ""
+      S3_UPLOADS_KEY: ""
+      S3_UPLOADS_SECRET: ""
       SERVER_NAME: "ox.docker"
 
   phpmyadmin:
