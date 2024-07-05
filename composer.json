@@ -44,6 +44,7 @@
         "wpackagist-plugin/wp-force-login": "*",
         "wpackagist-plugin/wps-hide-login": "*",
         "ministryofjustice/wp-gov-uk-notify": "*",
+        "wpackagist-plugin/advanced-custom-fields": "*",
         "brown-a2/herrnaset": "dev-main",
         "ministryofjustice/wp-s3-uploads": "dev-main"
     },
