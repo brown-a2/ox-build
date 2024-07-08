@@ -14,7 +14,7 @@ runprod:
 # Shutdown site using Docker
 down:
 	docker-compose down --remove-orphans
-	docker volume rm wordpress_data 2>/dev/null || true
+	docker volume rm ox-build_wordpress_data
 
 # Build all images on local machine
 # and remove any previous WP installations.
