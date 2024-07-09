@@ -1,16 +1,34 @@
-# Use the base image
+# Stage 1: Build Composer artifacts
+FROM composer:2 AS builder
+
+# Set work directory
+WORKDIR /app
+
+# Copy composer files
+COPY composer.json ./
+
+# Copy the entire wp-content directory as it may contain mu-plugins, plugins, and themes
+COPY /wordpress/wp-content /app/wp-content
+
+# Install Composer dependencies
+RUN composer install --no-dev --prefer-dist --optimize-autoloader
+
+# Stage 2: Base WordPress image
 FROM --platform=linux/arm/v7 wordpress:6.5.5-php8.3-fpm-alpine
 
+# Environment variables
 ENV PHP_INI_DIR /usr/local/etc/php
 
 # Install additional Alpine packages and wp-cli
-RUN apk update && \
+RUN set -eux; \
+    apk update && \
     apk add --no-cache less vim mysql-client htop && \
     curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x /usr/local/bin/wp && \
     addgroup -g 1001 wp && \
-    adduser -G wp -g wp -s /bin/sh -D wp && \
-    adduser wp www-data
+    adduser -G wp -g "WordPress User" -s /bin/sh -D wp && \
+    adduser wp www-data && \
+    apk cache clean
 
 # Add PHP multisite supporting files
 COPY opt/php/load.php /usr/src/wordpress/wp-content/mu-plugins/load.php
@@ -24,18 +42,20 @@ COPY opt/php/php.ini $PHP_INI_DIR/conf.d/
 COPY opt/scripts/hale-entrypoint.sh /usr/local/bin/hale-entrypoint.sh
 COPY opt/scripts/config.sh /usr/local/bin/config.sh
 
-# Generated Composer and NPM compiled artifacts
-COPY /wordpress/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
-COPY /wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
-COPY /wordpress/wp-content/themes /usr/src/wordpress/wp-content/themes
-COPY /vendor /usr/src/wordpress/wp-content/vendor
+# Copy generated Composer artifacts and wp-content from the builder stage
+COPY --from=builder /app/vendor /usr/src/wordpress/wp-content/vendor
+COPY --from=builder /app/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
+COPY --from=builder /app/wp-content/plugins /usr/src/wordpress/wp-content/plugins
+COPY --from=builder /app/wp-content/themes /usr/src/wordpress/wp-content/themes
 
 # Set permissions for scripts and WordPress content
-RUN chmod +x /usr/local/bin/hale-entrypoint.sh /usr/local/bin/config.sh && \
+RUN set -eux; \
+    chmod +x /usr/local/bin/hale-entrypoint.sh /usr/local/bin/config.sh && \
     mkdir -p /usr/src/wordpress/wp-content/uploads && \
     chown -R www-data:www-data /usr/src/wordpress/wp-content
 
 # Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
 ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]
 
+# Run as non-root user
 USER www-data
