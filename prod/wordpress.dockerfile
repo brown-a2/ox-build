@@ -7,6 +7,12 @@ WORKDIR /app
 # Copy composer files
 COPY composer.json ./
 
+# Pass build arguments for credentials
+ARG COMPOSER_AUTH
+
+# Set environment variables for Composer credentials
+ENV COMPOSER_AUTH=${COMPOSER_AUTH}
+
 # Install Composer dependencies
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
