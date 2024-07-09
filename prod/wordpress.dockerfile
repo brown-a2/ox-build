@@ -7,9 +7,6 @@ WORKDIR /app
 # Copy composer files
 COPY composer.json ./
 
-# Copy the entire wp-content directory as it may contain mu-plugins, plugins, and themes
-COPY /wordpress/wp-content /app/wp-content
-
 # Install Composer dependencies
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
@@ -39,23 +36,26 @@ COPY opt/php/wp-cron-multisite.php /usr/src/wordpress/wp-cron-multisite.php
 COPY opt/php/php.ini $PHP_INI_DIR/conf.d/
 
 # Setup WordPress multisite and network scripts
-COPY opt/scripts/hale-entrypoint.sh /usr/local/bin/hale-entrypoint.sh
+COPY opt/scripts/multisite-entrypoint.sh /usr/local/bin/multisite-entrypoint.sh
 COPY opt/scripts/config.sh /usr/local/bin/config.sh
 
 # Copy generated Composer artifacts and wp-content from the builder stage
 COPY --from=builder /app/vendor /usr/src/wordpress/wp-content/vendor
-COPY --from=builder /app/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
-COPY --from=builder /app/wp-content/plugins /usr/src/wordpress/wp-content/plugins
-COPY --from=builder /app/wp-content/themes /usr/src/wordpress/wp-content/themes
+COPY --from=builder /app/wordpress/wp-content/mu-plugins /usr/src/wordpress/wp-content/mu-plugins
+COPY --from=builder /app/wordpress/wp-content/plugins /usr/src/wordpress/wp-content/plugins
+COPY --from=builder /app/wordpress/wp-content/themes /usr/src/wordpress/wp-content/themes
+
+# Create new user to run the container as non-root
+RUN chown www-data:www-data /usr/local/bin/docker-entrypoint.sh
 
 # Set permissions for scripts and WordPress content
 RUN set -eux; \
-    chmod +x /usr/local/bin/hale-entrypoint.sh /usr/local/bin/config.sh && \
+    chmod +x /usr/local/bin/multisite-entrypoint.sh /usr/local/bin/config.sh && \
     mkdir -p /usr/src/wordpress/wp-content/uploads && \
     chown -R www-data:www-data /usr/src/wordpress/wp-content
 
 # Overwrite official WP image ENTRYPOINT (docker-entrypoint.sh)
-ENTRYPOINT ["/usr/local/bin/hale-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/multisite-entrypoint.sh"]
 
 # Run as non-root user
 USER www-data

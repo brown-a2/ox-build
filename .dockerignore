@@ -16,3 +16,5 @@ auth.json
 !/wordpress/wp-content/plugins
 !/wordpress/wp-content/themes
 !/wordpress/wp-content/mu-plugins
+
+wordpress_data/

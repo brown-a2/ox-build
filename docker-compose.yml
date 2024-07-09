@@ -3,51 +3,53 @@ services:
     container_name: nginx
     build:
       context: .
-      dockerfile: nginx.local.dockerfile
+      dockerfile: local/nginx.dockerfile
+    restart: unless-stopped
     ports:
       - 8080:8080
       - 443:443
     volumes:
-      - ./wordpress:/var/www/html:delegated
+      - ./wordpress_data:/var/www/html:delegated
       - ./opt/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./opt/nginx/localwordpress.conf:/etc/nginx/conf.d/localwordpress.conf
       - ./bin/certs:/etc/nginx/certs/self-signed/
     depends_on:
       - wordpress
-      - mariadb
     environment:
       VIRTUAL_HOST: ox.docker
       VIRTUAL_PORT: 443
+    networks:
+      - totoronet
 
   mariadb:
     container_name: mariadb
-    image: mariadb:11.1.2-jammy
-    ports:
-      - 3306:3306
+    image: mariadb:10.7.1-focal
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: oxbuild
+      MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
       SERVICE_NAME: mariadb
       SERVICE_TAGS: local
       VIRTUAL_HOST: mariadb.docker
+    restart: always
     volumes:
-      - database:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - totoronet
 
   wordpress:
     container_name: wordpress
-    platform: linux/amd64
     build:
       context: .
-      dockerfile: wordpress.dockerfile
-    volumes:
-      - ./wordpress:/var/www/html:delegated
-      - ./opt/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      dockerfile: local/wordpress.dockerfile
+      args:
+        COMPOSER_AUTH: ${COMPOSER_AUTH}
+    restart: unless-stopped
     depends_on:
       - mariadb
-    env_file:
-      - .env
     environment:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_USER: wordpress
@@ -55,7 +57,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_ADMIN_USER: admin
       WORDPRESS_ADMIN_PASSWORD: wordpress
-      WORDPRESS_ADMIN_EMAIL: "wordpress@hale.docker"
+      WORDPRESS_ADMIN_EMAIL: "wordpress@ox.docker"
       WP_ENVIRONMENT_TYPE: local
       S3_UPLOADS_USE_LOCAL: "true"
       S3_UPLOADS_USE_INSTANCE_PROFILE: "false"
@@ -64,21 +66,15 @@ services:
       S3_UPLOADS_KEY: ""
       S3_UPLOADS_SECRET: ""
       SERVER_NAME: "ox.docker"
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    platform: linux/amd64
-    ports:
-      - 3000:80 # access at http://localhost:3000
-    environment:
-      PMA_HOST: mariadb
-      PMA_PORT: 3306
-      UPLOAD_LIMIT: 600M
-      MYSQL_ROOT_PASSWORD: root # login root/root
-    depends_on:
-      - mariadb
+    volumes:
+      - ./wordpress_data:/var/www/html:delegated
+    networks:
+      - totoronet
 
 volumes:
-  database:
-    driver: local
+  mariadb_data:
+  wordpress_data:
+
+
+networks:
+  totoronet:
