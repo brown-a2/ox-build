@@ -41,6 +41,8 @@ services:
       dockerfile: prod/wordpress.dockerfile
       args:
         COMPOSER_AUTH: ${COMPOSER_AUTH}
+    env_file:
+      - /usr/local/bin/.env
     restart: always
     depends_on:
       - mariadb
