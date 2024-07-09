@@ -18,7 +18,7 @@ services:
       - wordpress
       - mariadb
     networks:
-      - mysitenet
+      - totoronet
 
   mariadb:
     container_name: mariadb
@@ -34,7 +34,7 @@ services:
     ports:
       - 3306:3306
     networks:
-      - mysitenet
+      - totoronet
 
   wordpress:
     container_name: wordpress
@@ -63,7 +63,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     networks:
-      - mysitenet
+      - totoronet
 
 volumes:
   mariadb_data:
@@ -71,4 +71,4 @@ volumes:
 
 
 networks:
-  mysitenet:
+  totoronet:
