@@ -48,8 +48,8 @@ while true; do
             echo -e '\n######################'
             echo -e '# Run Composer'
             echo -e '######################\n'
-            rm composer.lock
-            composer install --no-cache
+            #rm composer.lock
+            #composer install --no-cache
 
             # Test NPM is installed locally
             if npm > /dev/null 2>&1; then
@@ -57,11 +57,11 @@ while true; do
             exit 1
             fi
 
-            echo -e '\n######################'
-            echo -e '# Run NPM'
-            echo -e '######################\n'
-            npm install --prefix ./wordpress/wp-content/themes/herrnaset
-            npm run production --if-present --prefix ./wordpress/wp-content/themes/herrnaset
+            #echo -e '\n######################'
+            #echo -e '# Run NPM'
+            #echo -e '######################\n'
+            #npm install --prefix ./wordpress/wp-content/themes/herrnaset
+            #npm run production --if-present --prefix ./wordpress/wp-content/themes/herrnaset
 
             # Test Docker is running locally
             if ! docker info > /dev/null 2>&1; then
