@@ -17,6 +17,10 @@ build:
 	chmod +x bin/build.sh && \
 	./bin/build.sh
 
+buildprod:
+	chmod +x bin/build-prod.sh && \
+	./bin/build-prod.sh
+
 shell:
 	docker exec -it wordpress bash
 

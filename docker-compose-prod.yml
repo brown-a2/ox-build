@@ -1,7 +1,6 @@
 services:
   nginx:
     container_name: nginx
-    platform: linux/arm64v8
     build:
       context: .
       dockerfile: prod/nginx.dockerfile
