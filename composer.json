@@ -47,6 +47,7 @@
         "wpackagist-plugin/advanced-custom-fields": "*",
         "wpackagist-plugin/ewww-image-optimizer": "*",
         "brown-a2/herrnaset": "dev-main",
+        "brown-a2/totoro-components": "dev-main",
         "ministryofjustice/wp-s3-uploads": "dev-main"
     },
     "require-dev": {
