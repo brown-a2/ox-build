@@ -10,7 +10,7 @@ runprod:
 	docker-compose -f docker-compose-prod.yml --env-file /usr/local/bin/.env up -d
 
 down:
-	docker-compose down --remove-orphans
+	docker compose down --remove-orphans
 	docker volume rm ox-build_wordpress_data
 
 build:
