@@ -36,6 +36,10 @@
         },
         {
             "type": "vcs",
+            "url": "https://github.com/brown-a2/ibento"
+        },
+        {
+            "type": "vcs",
             "url": "https://github.com/brown-a2/totoro-components"
         }
     ],
@@ -51,6 +55,7 @@
         "wpackagist-plugin/advanced-custom-fields": "*",
         "wpackagist-plugin/ewww-image-optimizer": "*",
         "brown-a2/herrnaset": "dev-main",
+        "brown-a2/ibento": "dev-main",
         "brown-a2/totoro-components": "dev-main",
         "ministryofjustice/wp-s3-uploads": "dev-main"
     },
@@ -69,6 +74,9 @@
             ],
             "wordpress/wp-content/themes/herrnaset/": [
                 "brown-a2/herrnaset"
+            ],
+            "wordpress/wp-content/themes/ibento/": [
+                "brown-a2/ibento"
             ],
             "wordpress/wp-content/themes/{$name}/": [
                 "type:wordpress-theme"
