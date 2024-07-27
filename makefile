@@ -2,7 +2,7 @@
 ### Local build config
 ####################################################
 run:
-	docker-compose up -d
+	docker compose up -d
 	chmod +x bin/upload.sh
 	./bin/upload.sh
 
