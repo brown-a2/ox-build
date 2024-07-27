@@ -17,7 +17,7 @@ ENV COMPOSER_AUTH=${COMPOSER_AUTH}
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
 # Stage 2: Base WordPress image
-FROM wordpress:6.6.0-php8.3-fpm-alpine
+FROM wordpress:6.6.1-php8.3-fpm-alpine
 
 # Environment variables
 ENV PHP_INI_DIR /usr/local/etc/php
