@@ -56,11 +56,11 @@ while true; do
             # Check if environment is set to prod
             if [ "$ENVIRONMENT" = "prod" ]; then
                 echo -e 'Running prod build'
-                docker-compose -f docker-compose-prod.yml build --no-cache
+                docker compose -f docker-compose-prod.yml build --no-cache
             else
-                docker-compose build --no-cache
+                docker compose build --no-cache
             fi
-            
+
             break;;
         [Nn]* )
             exit;;
