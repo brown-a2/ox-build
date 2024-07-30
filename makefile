@@ -15,6 +15,7 @@ down:
 
 build:
 	chmod +x bin/build.sh && \
+	rm -rf wordpress_data
 	./bin/build.sh
 
 buildprod:

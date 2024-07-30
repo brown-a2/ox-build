@@ -25,7 +25,7 @@ ENV PHP_INI_DIR /usr/local/etc/php
 # Install additional Alpine packages and wp-cli
 RUN set -eux; \
     apk update && \
-    apk add --no-cache less vim mysql-client htop && \
+    apk add --no-cache less vim mysql-client htop libjpeg-turbo-utils && \
     curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x /usr/local/bin/wp && \
     addgroup -g 1001 wp && \
