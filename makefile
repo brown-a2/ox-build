@@ -37,5 +37,9 @@ importtopi:
 	chmod +x bin/import_script.sh
 	./bin/import_script.sh
 
+importtolocal:
+	docker cp backup-db-20240731222254.sql wordpress:/var/www/html
+	docker exec -i wordpress wp db import backup-db-20240731222254.sql
+
 syncs3local:
 	aws s3 sync s3://totoro-pi-ox-prod/uploads /Users/adam.brown/dev/ox-build/wordpress_data/wp-content/uploads --profile totoros3backup
