@@ -32,3 +32,33 @@ persistence:
   accessMode: ReadWriteOnce
   size: 5Gi
 
+secrets:
+  MULTISITE: "true"
+  WP_ALLOW_MULTISITE: "true"
+  BLOG_ID_CURRENT_SITE: "1"
+  SITE_ID_CURRENT_SITE: "1"
+  SUBDOMAIN_INSTALL: "false"
+  DOMAIN_CURRENT_SITE: "totoro-ox.net"
+  COOKIE_DOMAIN: "false"
+  ADMIN_COOKIE_PATH: "/"
+  COOKIEPATH: "/"
+  SITECOOKIEPATH: "/"
+  WP_ENVIRONMENT_TYPE: "prod"
+  AUTOMATIC_UPDATER_DISABLED: "true"
+  FORCE_SSL_ADMIN: "false"
+  S3_UPLOADS_BUCKET: ""
+  S3_UPLOADS_REGION: ""
+  S3_UPLOADS_KEY: ""
+  S3_UPLOADS_SECRET: ""
+  S3_UPLOADS_USE_INSTANCE_PROFILE: ""
+  QM_ENABLE_CAPS_PANEL: "true"
+  WP_CACHE: "true"
+  dbUser: "wordpress_user"
+  dbPassword: "securepassword"
+  dbName: "wordpress_db"
+  adminUser: "admin"
+  adminPassword: "adminpass"
+  adminEmail: "admin@example.com"
+  wpEnvironmentType: "production"
+
+
