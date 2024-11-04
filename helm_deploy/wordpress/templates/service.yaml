@@ -1,14 +1,14 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress
+  name: wordpress-service
+  namespace: totoro-ms-build-{{ .Values.env }}
   labels:
-    app: wordpress
+    app: wordpress-stack
 spec:
   ports:
-    - name: "8080"
-      port: 8080
+    - port: 8080
+      targetPort: 80
   selector:
-    app: wordpress
-    tier: frontend-c
+    app: wordpress-stack
+  type: ClusterIP
