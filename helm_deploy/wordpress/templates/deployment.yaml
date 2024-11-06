@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress-nginx
+  name: wordpress-ms
   namespace: totoro-ms-build-{{ .Values.env }}
   labels:
-    app: wordpress-nginx
+    app: wordpress-ms
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wordpress-nginx
+      app: wordpress-ms
   template:
     metadata:
       labels:
-        app: wordpress-nginx
+        app: wordpress-ms
     spec:
       containers:
         - name: wordpress

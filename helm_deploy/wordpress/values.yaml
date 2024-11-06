@@ -1,64 +1,53 @@
-# values.yaml
-domain: totoro-ox.net
-
-env: prod
+domain: "${DOMAIN}"
+env: "${ENV}"
 
 image:
   nginx:
-    repository: nginx
-    tag: latest
+    repository: "${IMAGE_NGINX_REPOSITORY}"
+    tag: "${IMAGE_NGINX_TAG}"
   wordpress:
-    repository: wordpress
-    tag: latest
+    repository: "${IMAGE_WORDPRESS_REPOSITORY}"
+    tag: "${IMAGE_WORDPRESS_TAG}"
   mariadb:
-    repository: jsurf/rpi-mariadb
-    tag: latest
+    repository: "${IMAGE_MARIADB_REPOSITORY}"
+    tag: "${IMAGE_MARIADB_TAG}"
 
 mysql:
-  rootPassword: root_password
-  database: wordpress_db
-  user: wordpress_user
-  password: wordpress_password
+  rootPassword: "${MYSQL_ROOT_PASSWORD}"
+  database: "${MYSQL_DATABASE}"
+  user: "${MYSQL_USER}"
+  password: "${MYSQL_PASSWORD}"
 
 wordpress:
-  dbHost: mariadb
-  adminUser: admin
-  adminPassword: admin_password
-  adminEmail: admin@example.com
+  dbHost: "${WORDPRESS_DB_HOST}"
+  adminUser: "${WORDPRESS_ADMIN_USER}"
+  adminPassword: "${WORDPRESS_ADMIN_PASSWORD}"
+  adminEmail: "${WORDPRESS_ADMIN_EMAIL}"
 
 persistence:
-  enabled: true
-  storageClass: "manual"
-  accessMode: ReadWriteOnce
-  size: 5Gi
+  enabled: "${PERSISTENCE_ENABLED}"
+  storageClass: "${PERSISTENCE_STORAGE_CLASS}"
+  accessMode: "${PERSISTENCE_ACCESS_MODE}"
+  size: "${PERSISTENCE_SIZE}"
 
 secrets:
-  MULTISITE: "true"
-  WP_ALLOW_MULTISITE: "true"
-  BLOG_ID_CURRENT_SITE: "1"
-  SITE_ID_CURRENT_SITE: "1"
-  SUBDOMAIN_INSTALL: "false"
-  DOMAIN_CURRENT_SITE: "totoro-ox.net"
-  COOKIE_DOMAIN: "false"
-  ADMIN_COOKIE_PATH: "/"
-  COOKIEPATH: "/"
-  SITECOOKIEPATH: "/"
-  WP_ENVIRONMENT_TYPE: "prod"
-  AUTOMATIC_UPDATER_DISABLED: "true"
-  FORCE_SSL_ADMIN: "false"
-  S3_UPLOADS_BUCKET: ""
-  S3_UPLOADS_REGION: ""
-  S3_UPLOADS_KEY: ""
-  S3_UPLOADS_SECRET: ""
-  S3_UPLOADS_USE_INSTANCE_PROFILE: ""
-  QM_ENABLE_CAPS_PANEL: "true"
-  WP_CACHE: "true"
-  dbUser: "wordpress_user"
-  dbPassword: "securepassword"
-  dbName: "wordpress_db"
-  adminUser: "admin"
-  adminPassword: "adminpass"
-  adminEmail: "admin@example.com"
-  wpEnvironmentType: "production"
-
-
+  MULTISITE: "${SECRETS_MULTISITE}"
+  WP_ALLOW_MULTISITE: "${SECRETS_WP_ALLOW_MULTISITE}"
+  BLOG_ID_CURRENT_SITE: "${SECRETS_BLOG_ID_CURRENT_SITE}"
+  SITE_ID_CURRENT_SITE: "${SECRETS_SITE_ID_CURRENT_SITE}"
+  SUBDOMAIN_INSTALL: "${SECRETS_SUBDOMAIN_INSTALL}"
+  DOMAIN_CURRENT_SITE: "${SECRETS_DOMAIN_CURRENT_SITE}"
+  COOKIE_DOMAIN: "${SECRETS_COOKIE_DOMAIN}"
+  ADMIN_COOKIE_PATH: "${SECRETS_ADMIN_COOKIE_PATH}"
+  COOKIEPATH: "${SECRETS_COOKIEPATH}"
+  SITECOOKIEPATH: "${SECRETS_SITECOOKIEPATH}"
+  WP_ENVIRONMENT_TYPE: "${SECRETS_WP_ENVIRONMENT_TYPE}"
+  AUTOMATIC_UPDATER_DISABLED: "${SECRETS_AUTOMATIC_UPDATER_DISABLED}"
+  FORCE_SSL_ADMIN: "${SECRETS_FORCE_SSL_ADMIN}"
+  S3_UPLOADS_BUCKET: "${SECRETS_S3_UPLOADS_BUCKET}"
+  S3_UPLOADS_REGION: "${SECRETS_S3_UPLOADS_REGION}"
+  S3_UPLOADS_KEY: "${SECRETS_S3_UPLOADS_KEY}"
+  S3_UPLOADS_SECRET: "${SECRETS_S3_UPLOADS_SECRET}"
+  S3_UPLOADS_USE_INSTANCE_PROFILE: "${SECRETS_S3_UPLOADS_USE_INSTANCE_PROFILE}"
+  QM_ENABLE_CAPS_PANEL: "${SECRETS_QM_ENABLE_CAPS_PANEL}"
+  WP_CACHE: "${SECRETS_WP_CACHE}"
